@@ -1,0 +1,27 @@
+{% extends 'star/base.html' %}
+{% block title %}{{ star.name }} - Borntoday.ru{% endblock %}
+
+{% block content %}
+<h4 class="mb-3">Детальная информация</h4>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ star.name }}</h5>
+    {% if star.photo %}
+      <img src="{{ star.photo.url }}" alt="{{ star.name }}" class="img-fluid mb-3" style="max-height: 300px;">
+    {% endif %}
+    <p class="card-text">
+      <strong>Дата рождения:</strong> {{ star.birth_date|date:"d E Y" }}<br>
+      <strong>Возраст:</strong> {{ star.get_age }} лет<br>
+      <strong>Страна:</strong> {{ star.country.name }}<br>
+      <strong>Вид деятельности:</strong>
+      {% for category in star.categories.all %}
+        {{ category.title }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}<br>
+      <strong>Добавлен:</strong> {{ star.time_create|date:"d.m.Y H:i" }}<br>
+      <strong>Обновлен:</strong> {{ star.time_update|date:"d.m.Y H:i" }}<br>
+      <em>{{ star.content }}</em>
+    </p>
+    <a href="{% url 'star_index' %}" class="btn btn-primary">Вернуться к списку</a>
+  </div>
+</div>
+{% endblock %}

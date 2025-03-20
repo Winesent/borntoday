@@ -1,0 +1,27 @@
+{% extends 'star/base.html' %}
+{% block title %}{{ title_template }} {{ country_name }} - Borntoday.ru{% endblock %}
+
+{% block content %}
+<h4 class="mb-3">{{ title_template }}: {{ country_name }}</h4>
+{% if stars %}
+ {% for star in stars %}
+   <div class="card mb-3">
+     <div class="card-body">
+       <h5 class="card-title">
+         <a href="{% url 'star_detail' star.slug %}">{{ star.name }}</a> ({{ star.get_age }} лет)
+       </h5>
+       <p class="card-text">
+         <strong>Дата рождения:</strong> {{ star.birth_date|date:"d E Y" }}<br>
+         <strong>Вид деятельности:</strong>
+         {% for category in star.categories.all %}
+           {{ category.title }}{% if not forloop.last %}, {% endif %}
+         {% endfor %}<br>
+         <em>{{ star.content }}</em>
+       </p>
+     </div>
+   </div>
+ {% endfor %}
+{% else %}
+ <p>Нет знаменитостей в этой стране.</p>
+{% endif %}
+{% endblock %}

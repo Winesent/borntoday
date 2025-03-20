@@ -1,0 +1,22 @@
+<div class="col-md-3">
+ <!-- Меню «Страны» -->
+ <h5>Страны</h5>
+ <ul class="list-group mb-4">
+   {% for country in star_countries %}
+   <li class="list-group-item">
+     <a href="{% url 'stars_by_country' country.slug %}">{{country.name}}</a>
+   </li>
+   {% endfor %}
+ </ul>
+
+ <!-- Меню «Виды деятельности» -->
+ <h5>Виды деятельности</h5>
+ <ul class="list-group">
+   {% for cat in star_categories %}
+   <li class="list-group-item">
+     <a href="{% url 'stars_by_category' cat.slug %}">{{ cat.title }}</a>
+   </li>
+   {% endfor %}
+
+ </ul>
+</div>

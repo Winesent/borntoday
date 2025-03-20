@@ -1,0 +1,94 @@
+{% extends 'star/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Блок с днями рождения -->
+{% if today_stars %}
+  <h4 class="mb-3">Сегодня день рождения у:</h4>
+  {% for star in today_stars %}
+    <div class="card mb-3 border-success">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{% url 'star_detail' star.id %}">{{ star.name }}</a> ({{ star.get_age }} лет)
+        </h5>
+        <p class="card-text">
+          <strong>Дата рождения:</strong> {{ star.birth_date|date:"d E Y" }}<br>
+          <strong>Страна:</strong> {{ star.country.name }}<br>
+          <strong>Вид деятельности:</strong>
+          {% for category in star.categories.all %}
+            {{ category.title }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}<br>
+          <em>{{ star.content }}</em>
+        </p>
+      </div>
+    </div>
+  {% endfor %}
+{% elif tomorrow_stars %}
+  <h4 class="mb-3">Завтра день рождения у:</h4>
+  {% for star in tomorrow_stars %}
+    <div class="card mb-3 border-info">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{% url 'star_detail' star.id %}">{{ star.name }}</a> ({{ star.get_age }} лет)
+        </h5>
+        <p class="card-text">
+          <strong>Дата рождения:</strong> {{ star.birth_date|date:"d E Y" }}<br>
+          <strong>Страна:</strong> {{ star.country.name }}<br>
+          <strong>Вид деятельности:</strong>
+          {% for category in star.categories.all %}
+            {{ category.title }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}<br>
+          <em>{{ star.content }}</em>
+        </p>
+      </div>
+    </div>
+  {% endfor %}
+{% elif day_after_tomorrow_stars %}
+  <h4 class="mb-3">Послезавтра день рождения у:</h4>
+  {% for star in day_after_tomorrow_stars %}
+    <div class="card mb-3 border-warning">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{% url 'star_detail' star.id %}">{{ star.name }}</a> ({{ star.get_age }} лет)
+        </h5>
+        <p class="card-text">
+          <strong>Дата рождения:</strong> {{ star.birth_date|date:"d E Y" }}<br>
+          <strong>Страна:</strong> {{ star.country.name }}<br>
+          <strong>Вид деятельности:</strong>
+          {% for category in star.categories.all %}
+            {{ category.title }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}<br>
+          <em>{{ star.content }}</em>
+        </p>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="alert alert-info mb-4">
+    <h4 class="alert-heading">Нет ближайших дней рождения</h4>
+    <p>В ближайшие 3 дня нет дней рождения знаменитостей.</p>
+  </div>
+{% endif %}
+
+<h4 class="mt-5 mb-3">Все знаменитости</h4>
+{% for star in stars %}
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">
+        <a href="{% url 'star_detail' star.slug %}">{{ star.name }}</a> ({{ star.get_age }} лет)
+      </h5>
+      <p class="card-text">
+        <strong>Дата рождения:</strong> {{ star.birth_date|date:"d E Y" }}<br>
+        <strong>Страна:</strong> {{ star.country.name }}<br>
+        <strong>Вид деятельности:</strong>
+        {% for category in star.categories.all %}
+          {{ category.title }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}<br>
+        <em>{{ star.content }}</em>
+      </p>
+    </div>
+  </div>
+{% empty %}
+  <p>Нет знаменитостей в базе данных.</p>
+{% endfor %}
+{% endblock %}

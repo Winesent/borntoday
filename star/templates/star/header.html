@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <!-- Левая часть: Логотип и слоган -->
+    <div class="d-flex flex-column">
+      <a class="navbar-brand fw-bold" href="{% url 'star_index' %}">Borntoday.ru</a>
+      <span class="small">Дни рождения знаменитостей</span>
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
+            aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Центральное меню -->
+    <div class="collapse navbar-collapse justify-content-center" id="mainMenu">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'star_index' %}">Главная</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">О сайте</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Кнопка «Добавить знаменитость» (пример) -->
+    <div>
+      <a href="{% url 'add_star' %}" class="btn btn-primary">Добавить знаменитость</a>
+    </div>
+  </div>
+</nav>
