@@ -1,9 +1,62 @@
 {% extends 'star/base.html' %}
+{% load static %}
 {% block title %}{{ title }} - Borntoday.ru{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'star/css/about.css' %}">
+{% endblock %}
+
 {% block content %}
-<h3>О сайте</h3>
-<p>
-{{ description }}
-<p>
+<div class="about-page">
+    <div class="container">
+        <!-- Заголовок -->
+        <div class="about-header">
+            <h1>{{ title }}</h1>
+            <p class="lead">{{ description }}</p>
+        </div>
+
+        <!-- Блок статистики -->
+        <div class="stats-section">
+            <div class="stats-card">
+                <h3 class="text-center">Статистика сайта</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="stat-item">
+                            <div class="stat-number">{{ stats.stars_count }}</div>
+                            <div class="stat-label">Знаменитостей</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-item">
+                            <div class="stat-number">{{ stats.countries_count }}</div>
+                            <div class="stat-label">Стран</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-item">
+                            <div class="stat-number">{{ stats.categories_count }}</div>
+                            <div class="stat-label">Категорий</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Информационный блок -->
+        <div class="info-section">
+            <h3>О нашем проекте</h3>
+            <p>Borntoday.ru - это самый полный каталог знаменитостей с информацией об их днях рождения, местах рождения и профессиональной деятельности.</p>
+            <p>Наша база данных постоянно пополняется новыми именами и обновляется с учетом последних изменений.</p>
+            <p>Мы стремимся предоставлять только достоверную информацию, проверенную нашими редакторами.</p>
+
+            <h3 class="mt-4">Технологии</h3>
+            <p>Сайт разработан с использованием современных веб-технологий лучшим программистом Каримом "Winesent" Габдуллиным:</p>
+            <ul>
+                <li>Django - мощный Python-фреймворк</li>
+                <li>Bootstrap 5 - для адаптивного дизайна</li>
+                <li>PostgreSQL - надежная база данных</li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

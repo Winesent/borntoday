@@ -73,8 +73,15 @@ def star_detail(request, slug):
 
 def about(request):
     """
-    Страница «О сайте».
+    Страница «О сайте» с блоком статистики.
     """
+    # Получаем статистику
+    stats = {
+        'stars_count': Star.objects.filter(is_published=True).count(),
+        'countries_count': Country.objects.count(),
+        'categories_count': Category.objects.count(),
+    }
+
     # Получаем все страны и категории для меню
     countries = Country.objects.all()
     categories = Category.objects.all()
@@ -82,6 +89,7 @@ def about(request):
     context = {
         'title': 'О сайте',
         'description': 'Сайт создан в учебных целях. Данные сгенерированы нейросетью.',
+        'stats': stats,
         'star_countries': countries,
         'star_categories': categories,
     }
