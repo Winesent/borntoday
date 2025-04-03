@@ -1,0 +1,22 @@
+{% extends 'star/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Карта сайта</h1>
+<h2 class="mb-3">Список всех знаменитостей</h2>
+
+{% if stars %}
+    <div class="list-group">
+        {% for star in stars %}
+            <a href="{% url 'star_detail' star.slug %}" class="list-group-item list-group-item-action">
+                {{ star.name }}
+                {% if star.birth_date %}
+                    <span class="text-muted">({{ star.birth_date|date:"d.m.Y" }})</span>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">На данный момент нет опубликованных знаменитостей.</div>
+{% endif %}
+{% endblock %}

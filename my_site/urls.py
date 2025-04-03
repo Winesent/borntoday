@@ -18,7 +18,7 @@ urlpatterns = [
    # Знаменитости по виду деятельности
    path('industry/<slug:slug>/', views.stars_by_category, name='stars_by_category'),
    path('add/', views.add_star, name='add_star'),  # Добавление знаменитости
-
+   path('sitemap/', views.sitemap, name='sitemap'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

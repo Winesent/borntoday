@@ -149,3 +149,23 @@ def add_star(request):
         'star_categories': categories,
     }
     return render(request, 'star/add-star.html', context)
+
+
+def sitemap(request):
+    """
+    Карта сайта со списком всех знаменитостей
+    """
+    # Получаем все опубликованные звезды, сортированные по имени
+    stars = Star.objects.filter(is_published=True).order_by('name')
+
+    # Получаем все страны и категории для меню (как в других представлениях)
+    countries = Country.objects.all()
+    categories = Category.objects.all()
+
+    context = {
+        'stars': stars,
+        'star_countries': countries,
+        'star_categories': categories,
+        'title': 'Карта сайта - Все знаменитости',
+    }
+    return render(request, 'star/sitemap.html', context)
