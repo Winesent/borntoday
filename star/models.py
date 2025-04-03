@@ -88,6 +88,24 @@ class Star(models.Model):
             age -= 1
         return age
 
+    def get_age_with_correct_word(self):
+        """Возвращает возраст с правильно склоненным словом 'год'"""
+        age = self.get_age()
+
+        # Проверка особых случаев 11-14
+        if 11 <= (age % 100) <= 14:
+            return f"{age} лет"
+
+        # Проверка последней цифры
+        last_digit = age % 10
+
+        if last_digit == 1:
+            return f"{age} год"
+        elif 2 <= last_digit <= 4:
+            return f"{age} года"
+        else:
+            return f"{age} лет"
+
     def save(self, *args, **kwargs):
         if not self.slug:
             # Транслитерация имени с русского на английский

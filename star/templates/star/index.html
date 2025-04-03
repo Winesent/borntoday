@@ -75,7 +75,7 @@
   <div class="card mb-3">
     <div class="card-body">
       <h5 class="card-title">
-        <a href="{% url 'star_detail' star.slug %}">{{ star.name }}</a> ({{ star.get_age }} лет)
+        <a href="{% url 'star_detail' star.slug %}">{{ star.name }}</a> ({{ star.get_age_with_correct_word }})
       </h5>
       <p class="card-text">
         <strong>Дата рождения:</strong> {{ star.birth_date|date:"d E Y" }}<br>
