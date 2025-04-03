@@ -152,20 +152,76 @@ def add_star(request):
 
 
 def sitemap(request):
-    """
-    Карта сайта со списком всех знаменитостей
-    """
+    """Карта сайта со списком всех знаменитостей и алфавитным указателем"""
     # Получаем все опубликованные звезды, сортированные по имени
     stars = Star.objects.filter(is_published=True).order_by('name')
 
-    # Получаем все страны и категории для меню (как в других представлениях)
+    # Русский алфавит (включая Ё)
+    russian_alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ'
+    english_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    # Определяем, какие буквы есть в базе
+    available_letters = set()
+
+    # Для русского алфавита
+    for letter in russian_alphabet:
+        if Star.objects.filter(is_published=True, name__istartswith=letter).exists():
+            available_letters.add(letter)
+
+    # Для английского алфавита
+    for letter in english_alphabet:
+        if Star.objects.filter(is_published=True, name__istartswith=letter).exists():
+            available_letters.add(letter)
+
+    # Получаем все страны и категории для меню
     countries = Country.objects.all()
     categories = Category.objects.all()
 
     context = {
         'stars': stars,
+        'russian_alphabet': russian_alphabet,
+        'english_alphabet': english_alphabet,
+        'available_letters': available_letters,
         'star_countries': countries,
         'star_categories': categories,
         'title': 'Карта сайта - Все знаменитости',
     }
     return render(request, 'star/sitemap.html', context)
+
+
+def sitemap_letter(request, letter):
+    """Карта сайта с фильтрацией по первой букве имени"""
+    # Приводим букву к верхнему регистру
+    letter = letter.upper()
+
+    # Фильтруем звезды по первой букве имени
+    stars = Star.objects.filter(
+        is_published=True,
+        name__istartswith=letter
+    ).order_by('name')
+
+    # Русский и английский алфавиты
+    russian_alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ'
+    english_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    # Определяем, какие буквы есть в базе
+    available_letters = set()
+    for l in russian_alphabet + english_alphabet:
+        if Star.objects.filter(is_published=True, name__istartswith=l).exists():
+            available_letters.add(l)
+
+    # Получаем все страны и категории для меню
+    countries = Country.objects.all()
+    categories = Category.objects.all()
+
+    context = {
+        'stars': stars,
+        'current_letter': letter,
+        'russian_alphabet': russian_alphabet,
+        'english_alphabet': english_alphabet,
+        'available_letters': available_letters,
+        'star_countries': countries,
+        'star_categories': categories,
+        'title': f'Карта сайта - Знаменитости на букву {letter}',
+    }
+    return render(request, 'star/sitemap_letter.html', context)

@@ -3,15 +3,18 @@
 
 {% block content %}
 <h1 class="mb-4">Карта сайта</h1>
-<h2 class="mb-3">Список всех знаменитостей</h2>
+<h2 class="mb-3">Знаменитости на букву {{ current_letter }}</h2>
 
-<!-- Алфавитная навигация -->
+<!-- Алфавитная навигация (такая же, как в sitemap.html) -->
 <div class="alphabet-nav mb-4">
     <h4>Русский алфавит:</h4>
     <div class="d-flex flex-wrap mb-3">
         {% for letter in russian_alphabet %}
             {% if letter in available_letters %}
-                <a href="{% url 'sitemap_letter' letter=letter %}" class="btn btn-outline-primary btn-sm m-1">{{ letter }}</a>
+                <a href="{% url 'sitemap_letter' letter=letter %}"
+                   class="btn btn-outline-primary btn-sm m-1 {% if letter == current_letter %}active{% endif %}">
+                    {{ letter }}
+                </a>
             {% else %}
                 <span class="btn btn-outline-secondary btn-sm m-1 disabled">{{ letter }}</span>
             {% endif %}
@@ -22,7 +25,10 @@
     <div class="d-flex flex-wrap mb-3">
         {% for letter in english_alphabet %}
             {% if letter in available_letters %}
-                <a href="{% url 'sitemap_letter' letter=letter %}" class="btn btn-outline-primary btn-sm m-1">{{ letter }}</a>
+                <a href="{% url 'sitemap_letter' letter=letter %}"
+                   class="btn btn-outline-primary btn-sm m-1 {% if letter == current_letter %}active{% endif %}">
+                    {{ letter }}
+                </a>
             {% else %}
                 <span class="btn btn-outline-secondary btn-sm m-1 disabled">{{ letter }}</span>
             {% endif %}
@@ -43,6 +49,11 @@
         {% endfor %}
     </div>
 {% else %}
-    <div class="alert alert-info">На данный момент нет опубликованных знаменитостей.</div>
+    <div class="alert alert-info">Нет знаменитостей на букву {{ current_letter }}.</div>
 {% endif %}
+
+<!-- Кнопка возврата -->
+<div class="mt-4">
+    <a href="{% url 'sitemap' %}" class="btn btn-secondary">Вернуться к полному списку</a>
+</div>
 {% endblock %}
